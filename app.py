@@ -90,9 +90,10 @@ with tab2:
     st.pyplot(fig3)
 
     st.markdown("#### Versión interactiva (Plotly)")
-    fig4 = px.histogram(df, x="Age", color="Survived", marginal="density", barmode="overlay",
-                        title="Distribución de Edad por Supervivencia - Interactivo",
-                        labels={'Age': 'Edad', 'Survived': 'Sobrevivió'})
+    fig4 = px.histogram(df, x="Age", color="Survived", marginal="density",
+                    title="Distribución de Edad por Supervivencia - Interactivo",
+                    labels={'Age': 'Edad', 'Survived': 'Sobrevivió'})
+
     st.plotly_chart(fig4)
 
 # -------------------------
