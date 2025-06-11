@@ -18,9 +18,22 @@ df["Survived"] = df["Survived"].map({0: "No sobrevivió", 1: "Sobrevivió"})
 st.title("📊 Explorador del Titanic")
 st.dataframe(df.head())
 
+# ---------- BLOQUE DIAGNÓSTICO ----------
+st.subheader("🛠️ Diagnóstico interno")
+st.write("**Tipos de columna**:", df.dtypes.to_dict())
+st.write("**Valores nulos por columna**:", df.isnull().sum().to_dict())
+try:
+    df_age_diag = df[["Age", "Survived"]].dropna()
+    df_age_diag["Survived"] = df_age_diag["Survived"].astype(str)
+    _ = px.histogram(df_age_diag, x="Age", color="Survived")
+    st.success("✔️ Histograma inicial puede generarse sin errores")
+except Exception as error:
+    st.error("❌ Histograma falla al inicializarse")
+    st.exception(error)
+# ----------------------------------------
+
 tab1, tab2, tab3 = st.tabs(["🧍‍♂️ Supervivencia por Clase", "🎂 Edad y Supervivencia", "🧬 PCA 3D"])
 
-# ------------------- TAB 1 -------------------
 with tab1:
     st.header("🧍‍♂️ Supervivencia por Clase")
     prop_clase = df.groupby(["Pclass", "Survived"]).size().reset_index(name="count")
@@ -38,20 +51,31 @@ with tab1:
                   labels={"Pclass": "Clase", "count": "Cantidad"})
     st.plotly_chart(fig2)
 
-# ------------------- TAB 2 -------------------
 with tab2:
     st.header("🎂 Edad y Supervivencia")
-    df_age = df[["Age", "Survived"]].dropna()
-df_age["Survived"] = df_age["Survived"].astype(str)  # <- Conversión forzada a string
 
-fig4 = px.histogram(df_age, x="Age", color="Survived",
-                    color_discrete_map={"No sobrevivió": "#d62728", "Sobrevivió": "#2ca02c"},
-                    labels={"Age": "Edad"},
-                    title="Distribución de Edad por Supervivencia (Interactivo)")
-st.plotly_chart(fig4)
+    try:
+        df_age = df[["Age", "Survived"]].dropna()
+        df_age["Survived"] = df_age["Survived"].astype(str)
 
+        st.subheader("Densidad KDE (Seaborn)")
+        fig3, ax2 = plt.subplots()
+        sns.kdeplot(data=df_age, x="Age", hue="Survived", fill=True,
+                    palette=["#d62728", "#2ca02c"], ax=ax2)
+        ax2.set_title("Distribución de Edad")
+        st.pyplot(fig3)
 
-# ------------------- TAB 3 -------------------
+        st.subheader("Histograma Interactivo (Plotly)")
+        fig4 = px.histogram(df_age, x="Age", color="Survived",
+                            color_discrete_map={"No sobrevivió": "#d62728", "Sobrevivió": "#2ca02c"},
+                            labels={"Age": "Edad"},
+                            title="Distribución de Edad por Supervivencia (Interactivo)")
+        st.plotly_chart(fig4)
+
+    except Exception as e:
+        st.error("❌ Error al generar los gráficos de edad.")
+        st.exception(e)
+
 with tab3:
     st.header("🧬 PCA 3D")
     df_numeric = df.select_dtypes(include="number").dropna()
