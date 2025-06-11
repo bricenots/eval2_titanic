@@ -1,41 +1,43 @@
-# 🚢 Evaluación 2 - Visualización de Datos: Titanic
+# Análisis Visual del Titanic
 
-Esta aplicación fue desarrollada como parte de la Evaluación 2 del curso **Herramientas de Visualización de Datos** del Magíster en Ciencia de Datos.
+Aplicación desarrollada como parte de la **Evaluación 2** del Magíster en Ciencia de Datos (MDAS-HVD).
 
-## 📋 Objetivos
+Este proyecto utiliza visualización de datos para explorar las relaciones entre variables clave en el histórico naufragio del Titanic, haciendo énfasis en el impacto de la **clase social**, la **edad** y la **supervivencia**.
 
-- Explorar el dataset del Titanic mediante visualizaciones analíticas y técnicas de reducción de dimensionalidad.
-- Usar **Streamlit** como framework de desarrollo para interfaces interactivas en Python.
+---
 
-## 🧰 Tecnologías utilizadas
+## 📌 Descripción
 
-- Python
+Esta app interactiva permite:
+
+- Comparar la supervivencia según clase de pasajero.
+- Analizar la distribución de edad entre sobrevivientes y no sobrevivientes.
+- Visualizar agrupaciones mediante **PCA 3D** para explorar patrones multivariantes.
+
+El enfoque se centra en la narrativa visual: **cada dato representa una vida, no solo un número**.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- Python 3.x
 - Streamlit
-- Pandas
-- Matplotlib / Seaborn
-- Plotly
-- scikit-learn
+- pandas, matplotlib, seaborn, plotly
+- scikit-learn (para PCA)
 
-## 📁 Archivos incluidos
+---
 
-| Archivo                | Descripción                                     |
-|------------------------|-------------------------------------------------|
-| `app.py`               | Script principal de la app Streamlit            |
-| `requirements.txt`     | Lista de dependencias para reproducibilidad     |
-| `MDAS-HVD_EVAL_2_Datos.csv` | Dataset del Titanic (proporcionado por la asignatura) |
+## 🧭 Estructura
 
-## ▶️ Cómo ejecutar la aplicación
+- `app.py`: Código fuente principal de la aplicación.
+- `MDAS-HVD_EVAL_2_Datos.csv`: Conjunto de datos utilizado.
+- `requirements.txt`: Dependencias necesarias.
 
-### Opción 1: Localmente
+---
 
-1. Clona este repositorio o descarga los archivos
-2. Instala las dependencias:
+## 🚀 Instrucciones de Uso
+
+### Requisitos
 
 ```bash
 pip install -r requirements.txt
-
-3.Ejecuta la app:
-streamlit run app.py
-
-4.Se abrirá en tu navegador local: http://localhost:8501
-
