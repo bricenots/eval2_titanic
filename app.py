@@ -42,19 +42,14 @@ with tab1:
 with tab2:
     st.header("🎂 Edad y Supervivencia")
     df_age = df[["Age", "Survived"]].dropna()
+df_age["Survived"] = df_age["Survived"].astype(str)  # <- Conversión forzada a string
 
-    st.subheader("Densidad KDE (Seaborn)")
-    fig3, ax2 = plt.subplots()
-    sns.kdeplot(data=df_age, x="Age", hue="Survived", fill=True,
-                palette=["#d62728", "#2ca02c"], ax=ax2)
-    ax2.set_title("Distribución de Edad")
-    st.pyplot(fig3)
+fig4 = px.histogram(df_age, x="Age", color="Survived",
+                    color_discrete_map={"No sobrevivió": "#d62728", "Sobrevivió": "#2ca02c"},
+                    labels={"Age": "Edad"},
+                    title="Distribución de Edad por Supervivencia (Interactivo)")
+st.plotly_chart(fig4)
 
-    st.subheader("Histograma Interactivo (Plotly)")
-    fig4 = px.histogram(df_age, x="Age", color="Survived",
-                        color_discrete_map={"No sobrevivió": "#d62728", "Sobrevivió": "#2ca02c"},
-                        labels={"Age": "Edad"})
-    st.plotly_chart(fig4)
 
 # ------------------- TAB 3 -------------------
 with tab3:
