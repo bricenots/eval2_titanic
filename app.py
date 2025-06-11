@@ -6,8 +6,31 @@ import plotly.express as px
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+# Configuración inicial
 st.set_page_config(page_title="Análisis Visual del Titanic", layout="wide")
 
+# 🔔 Advertencia para móviles
+st.markdown("""
+<style>
+@media screen and (max-width: 800px) {
+    .mobile-warning {
+        display: block;
+        padding: 1em;
+        background-color: #fff3cd;
+        border-left: 6px solid #ffa500;
+        font-size: 15px;
+        color: #856404;
+        margin-bottom: 1.5em;
+        border-radius: 5px;
+    }
+}
+</style>
+<div class='mobile-warning'>
+📱 <strong>Advertencia:</strong> Esta aplicación ha sido optimizada para computadores de escritorio. En móviles algunos gráficos y funciones pueden no mostrarse correctamente. Para mejor experiencia, usa una pantalla grande.
+</div>
+""", unsafe_allow_html=True)
+
+# Función para cargar datos
 @st.cache_data
 def cargar_datos():
     return pd.read_csv("MDAS-HVD_EVAL_2_Datos.csv")
@@ -15,19 +38,30 @@ def cargar_datos():
 df = cargar_datos()
 df["Sobreviviente"] = df["Survived"].map({0: "No", 1: "Sí"})
 
-st.title("Análisis Visual del Titanic")
+# 📝 Storytelling de inicio
+st.title("El Titanic: Más que datos, vidas")
 st.markdown("""
-Este panel interactivo presenta un análisis visual del conjunto de datos del Titanic.
-Permite explorar relaciones entre variables clave como la clase del pasajero, la edad y la supervivencia.
+> En abril de 1912, el **RMS Titanic**, orgullo de la ingeniería naval, partió en su viaje inaugural desde Southampton a Nueva York. Más de 2.200 personas iban a bordo. Solo 710 sobrevivieron.
+
+Esta aplicación busca **dar sentido a los datos** de esa tragedia, explorando cómo la clase social, la edad y otras variables influyeron en las posibilidades de sobrevivir.
+
+Los datos son reales. Cada punto representa una vida. Comencemos.
 """)
+
 st.dataframe(df.head())
 
 tab1, tab2, tab3 = st.tabs(["Supervivencia por Clase", "Distribución de Edad", "Análisis PCA 3D"])
 
-# ------------------- TAB 1 -------------------
+# ---------- TAB 1 ----------
 with tab1:
-    st.header("Supervivencia por Clase de Pasajero")
-    st.markdown("Este gráfico compara la cantidad de personas que sobrevivieron y no sobrevivieron según su clase de ticket.")
+    st.header("¿Sobrevivir o no? La importancia de la clase")
+    st.markdown("""
+Durante el naufragio, la **clase del pasaje** influyó drásticamente en las posibilidades de escapar.
+
+¿Fue el acceso a los botes? ¿La ubicación en el barco? ¿La velocidad de respuesta?
+
+Este gráfico muestra cómo la clase social marcó una diferencia.
+""")
 
     resumen_clase = df.groupby(["Pclass", "Sobreviviente"]).size().reset_index(name="Cantidad")
 
@@ -45,10 +79,14 @@ with tab1:
                   title="Supervivencia por Clase (Interactivo)")
     st.plotly_chart(fig2)
 
-# ------------------- TAB 2 -------------------
+# ---------- TAB 2 ----------
 with tab2:
-    st.header("Distribución de Edad y Supervivencia")
-    st.markdown("Este gráfico muestra cómo varía la edad entre quienes sobrevivieron y quienes no.")
+    st.header("La edad no perdona... ¿o sí?")
+    st.markdown("""
+Uno podría pensar que los niños tendrían prioridad. ¿Pero fue así?
+
+Estos gráficos permiten explorar si hubo diferencias en la supervivencia según la edad de los pasajeros.
+""")
 
     df_edad = df[["Age", "Sobreviviente"]].dropna()
 
@@ -71,11 +109,14 @@ with tab2:
         st.error("No se pudo generar el histograma interactivo.")
         st.exception(e)
 
-# ------------------- TAB 3 -------------------
+# ---------- TAB 3 ----------
 with tab3:
-    st.header("Reducción de Dimensiones (PCA 3D)")
-    st.markdown("Este gráfico tridimensional representa las características numéricas de cada pasajero \
-utilizando Análisis de Componentes Principales (PCA), agrupadas por su condición de supervivencia.")
+    st.header("¿Y si lo vemos en tres dimensiones?")
+    st.markdown("""
+El Análisis de Componentes Principales (PCA) permite reducir múltiples variables a solo tres dimensiones visuales.
+
+Aquí podrás observar una representación simplificada de los pasajeros, agrupados según si sobrevivieron o no.
+""")
 
     datos_numericos = df.select_dtypes(include="number").dropna()
     X = StandardScaler().fit_transform(datos_numericos)
@@ -95,5 +136,16 @@ utilizando Análisis de Componentes Principales (PCA), agrupadas por su condici�
                          title="Visualización 3D PCA por Supervivencia")
     st.plotly_chart(fig5)
 
+# ---------- CIERRE ----------
 st.markdown("---")
-st.caption("Aplicación desarrollada para la Evaluación 2 del Magíster en Ciencia de Datos.")
+st.markdown("""
+### 🎯 Reflexión Final
+
+Esta visualización no solo muestra datos, sino también decisiones humanas.
+
+Cada punto representa una historia. Esta aplicación es un intento de entender, desde los datos, qué factores hicieron la diferencia aquella noche.
+
+Los datos no hablan por sí solos. Somos nosotros quienes debemos **darles sentido**.
+""")
+
+st.caption("Aplicación desarrollada por Tomás Briceño — Evaluación 2, Magíster en Ciencia de Datos.")
