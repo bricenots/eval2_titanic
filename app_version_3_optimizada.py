@@ -13,10 +13,10 @@ st.set_page_config(page_title="📉 Historias del Titanic", layout="wide")
 st.title("🌊 Historias del Titanic: Visualización Interactiva")
 st.markdown("Explora los datos del Titanic desde una perspectiva visual y reflexiva. "
             "Cada gráfico representa decisiones, vidas y realidades distintas.")
-
-# Subida de datos
-st.sidebar.header("📂 Subir archivo CSV")
-archivo = st.sidebar.file_uploader("Selecciona el archivo de datos del Titanic", type=["csv"])
+# Carga de datos
+@st.cache_data
+def cargar_datos():
+    return pd.read_csv("MDAS-HVD_EVAL_2_Datos.csv")
 
 if archivo is not None:
     df = pd.read_csv(archivo)
