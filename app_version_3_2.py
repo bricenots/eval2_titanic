@@ -16,8 +16,7 @@ st.write("Esta aplicación está diseñada para ser visualizada desde un computa
 # -------------------------------
 # Cargar datos desde GitHub
 # -------------------------------
-DATA_URL = "https://raw.githubusercontent.com/TomasBricenoC/MDS/main/MDAS-HVD_EVAL_2_Datos.csv"
-df = pd.read_csv(DATA_URL)
+df = pd.read_csv("MDAS-HVD_EVAL_2_Datos.csv")
 
 # -------------------------------
 # Renombrar columnas para visualización
