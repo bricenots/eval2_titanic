@@ -33,7 +33,7 @@ st.markdown("""
 # ---------------------------------------------
 # SIDEBAR CON STORYTELLING Y AYUDA
 # ---------------------------------------------
-st.sidebar.markdown("### 🧭 Explorador del Titanic")
+st.sidebar.markdown("###  Explorador del Titanic")
 st.sidebar.markdown("""
 Esta app visualiza datos reales del Titanic.
 
@@ -42,7 +42,7 @@ Explora las relaciones entre clase social, edad y supervivencia.
 Cada punto representa una historia.
 """)
 
-st.sidebar.markdown("### 📋 Datos utilizados")
+st.sidebar.markdown("###  Datos utilizados")
 st.sidebar.markdown("""
 - Registros: 891 pasajeros
 - Variables:
@@ -52,20 +52,20 @@ st.sidebar.markdown("""
   - Sexo (`Sex`)
 """)
 
-st.sidebar.markdown("### ⚓ Breve historia")
+st.sidebar.markdown("###  Breve historia")
 st.sidebar.markdown("""
 El Titanic naufragó el 15 de abril de 1912, con más de 1.500 muertes.
 
 El desastre motivó reformas internacionales de seguridad marítima.
 """)
 
-st.sidebar.markdown("### 🎨 Leyenda de colores")
+st.sidebar.markdown("###  Leyenda de colores")
 st.sidebar.markdown("""
 - 🟩 Verde: Sobrevivió
 - 🟥 Rojo: No sobrevivió
 """)
 
-st.sidebar.markdown("### ❓ Preguntas guía")
+st.sidebar.markdown("###  Preguntas guía")
 st.sidebar.markdown("""
 - ¿La clase social determinó el destino?
 - ¿Hubo desigualdad por edad o sexo?
